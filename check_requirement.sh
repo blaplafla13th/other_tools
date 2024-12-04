@@ -6,8 +6,9 @@ check_beagle() {
    exit 1
   fi
   unset beagle
+  beagle_path=$(readlink -f bin/beagle.29Oct24.c8e.jar)
   beagle() {
-    java -jar "$(readlink -f bin/beagle.29Oct24.c8e.jar)" "$@"
+    java -jar "$beagle_path" "$@"
   }
   if ! beagle > /dev/null; then
     echo 'Beagle is not found'
@@ -17,8 +18,9 @@ check_beagle() {
 
 check_eagle() {
   unset eagle
+  eagle_path=$(readlink -f bin/eagle_v2.4.1)
   eagle(){
-    "$(readlink -f bin/eagle_v2.4.1)" "$@"
+    "$eagle_path" "$@"
   }
   if ! eagle --help > /dev/null; then
     echo 'Eagle is not found'
@@ -28,8 +30,9 @@ check_eagle() {
 
 check_minimac() {
   unset minimac
+  minimac_path=$(readlink -f bin/minimac4.1.6)
   minimac(){
-    "$(readlink -f bin/minimac4.1.6)" "$@"
+    "$minimac_path" "$@"
   }
   if ! minimac --help > /dev/null; then
     echo 'Minimac is not found'
@@ -39,8 +42,9 @@ check_minimac() {
 
 check_impute() {
   unset impute
+  impute_path=$(readlink -f bin/impute5_v1.2.0)
   impute(){
-    "$(readlink -f bin/impute5_v1.2.0)" "$@"
+    "$impute_path" "$@"
   }
   if ! impute --help > /dev/null; then
     echo 'Impute5 is not found'
@@ -50,8 +54,9 @@ check_impute() {
 
 check_shapeit(){
   unset shapeit
+  shapeit_path=$(readlink -f bin/shapeit_phase_common_staticv5.1.1)
   shapeit(){
-    "$(readlink -f bin/shapeit_phase_common_staticv5.1.1)" "$@"
+    "$shapeit_path" "$@"
   }
   if ! shapeit --help > /dev/null; then
     echo 'Shapeit is not found'
