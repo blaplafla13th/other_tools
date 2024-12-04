@@ -13,6 +13,6 @@ if [ -z "$ref_panel" ]; then
 fi
 (
 echo "Phasing by Beagle:"
-echo "beagle ${params_final}"
-measurebeagle ${params_final}
+echo "beagle ${params_final} ${extra_params}"
+measure beagle ${params_final} ${extra_params}
 ) |& tee -a "${log}"

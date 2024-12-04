@@ -17,6 +17,6 @@ fi
 params_final="${params_final} --outPrefix=${output}/${file_name}.phased --numThreads ${num_threads}"
 (
 echo "Phasing by Eagle:"
-echo "eagle ${params_final}"
-measure eagle ${params_final}
+echo "eagle ${params_final} ${extra_params}"
+measure eagle ${params_final} ${extra_params}
 ) |& tee -a "${log}"

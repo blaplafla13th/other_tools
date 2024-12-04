@@ -10,6 +10,6 @@ parser_imputing "beagle" $params
 params_final="gt=${phased_data} ref=${ref_panel} map=${genetic_map} out=${output}/${file_name}.imputed gp=true ap=true nthreads=${num_threads}"
 (
 echo "Imputing by Beagle:"
-echo "beagle ${params_final}"
-measure beagle "${params_final}"
+echo "beagle ${params_final} ${extra_params}"
+measure beagle "${params_final} ${extra_params}"
 ) |& tee -a "${log}"

@@ -1,6 +1,7 @@
 #!/bin/bash
 ref_panel=''
 num_threads=$(echo -e "$(($(nproc)/3))\n1" | sort -n | tail -1)
+extra_params=''
 parser_phasing(){
   toolname=$1
   shift
@@ -12,7 +13,8 @@ parser_phasing(){
       -ref_panel|-r <path> (optional)
       -genetic_map|-g <path> (required)
       -num_threads|-n <number> (optional)
-      -regions <range>|-c (optional/required in some cases)"
+      -regions <range>|-c (optional/required in some cases)
+      -extra_params|-e <params> (optional)"
   }
   if [[ "$#" -eq 0 ]]; then
       usage
@@ -28,6 +30,7 @@ parser_phasing(){
           -genetic_map|-g) genetic_map="$2"; shift ;;
           -num_threads|-n) num_threads="$2"; shift ;;
           -regions|-c) regions="$2"; shift ;;
+          -extra_params|-e) extra_params="$2"; shift ;;
           -help|-h|*) usage; exit 0 ;;
       esac
       shift
@@ -47,6 +50,7 @@ parser_phasing(){
     Genetic map: $genetic_map
     Number of threads: $num_threads
     Regions: $regions
+    Extra params: $extra_params
     Log file: $log" | tee -a ${log}
 }
 
@@ -55,14 +59,15 @@ parser_imputing(){
   shift
   usage() {
       echo "Usage: $0
-      -input_dir <path> (required)
-      -file_name <name> (required)
-      -output_dir <path> (required)
-      -ref_panel <path> (optional)
-      -genetic_map <path> (required)
-      -num_threads <number> (optional)
-      -regions <range> (optional/required in some cases)
-      -phasing_tool <tool> (required)"
+      -input_dir|-i <path> (required)
+      -file_name|-f <name> (required)
+      -output_dir|-o <path> (required)
+      -ref_panel|-r <path> (optional)
+      -genetic_map|-g <path> (required)
+      -num_threads|-n <number> (optional)
+      -regions|-c <range> (optional/required in some cases)
+      -phasing_tool|-p <tool> (required)
+      -extra_params|-e <params> (optional)"
   }
   if [[ "$#" -eq 0 ]]; then
       usage
@@ -79,6 +84,7 @@ parser_imputing(){
           -num_threads|-n) num_threads="$2"; shift ;;
           -regions|-v) regions="$2"; shift ;;
           -phasing_tool|-p) phasing_tool="$2"; shift ;;
+          -extra_params|-e) extra_params="$2"; shift ;;
           -help|-h) usage; exit 0 ;;
       esac
       shift
@@ -89,7 +95,7 @@ parser_imputing(){
       exit 1
   fi
   case $phasing_tool in
-    beagle|eagle)
+    beagle|eagle|shapeit)
       phased_data="${output_dir}/output/phasing/${phasing_tool}/${file_name}.phased.vcf.gz"
       if [ ! -f "$phased_data" ]; then
         echo "Data doesn't exist. Please run phasing with $phasing_tool first"
@@ -114,6 +120,7 @@ parser_imputing(){
     Regions: $regions
     Phasing tool: $phasing_tool
     Phased data: $phased_data
+    Extra params: $extra_params
     Log file: $log" | tee -a ${log}
 }
 
