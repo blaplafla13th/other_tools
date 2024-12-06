@@ -281,7 +281,7 @@ run() {
   # shellcheck disable=SC2086
   parser $toolname $type $params
   if [ "$enable_log" ] && [ "$enable_silent" ]; then
-    run >> "${log}" 2>&1
+    run >>"${log}" 2>&1
   elif [ ! "$enable_log" ] && [ "$enable_silent" ]; then
     run_silent
   elif [ "$enable_log" ] && [ ! "$enable_silent" ]; then
